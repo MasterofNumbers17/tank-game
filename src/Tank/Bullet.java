@@ -21,7 +21,7 @@ import processing.core.PApplet;
  */
 public class Bullet {
     float x, y, r;
-    final static float BULLET_SIZE = 10, BULLET_SPEED = 5;
+    final static float BULLET_SIZE = 10, BULLET_SPEED = 12;
 
     Bullet(float x, float y, float r) {
         this.x = x;
