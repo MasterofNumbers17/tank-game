@@ -20,7 +20,7 @@ import processing.core.*;
 import java.util.ArrayList;
 /**A game of tanks!
  * @author Adrien Hopkins
- * @version 1.0.0
+ * @version 1.1.0
  */
 public class TankGame extends PApplet {
     static String[] program = {"Tank.TankGame"};
@@ -28,9 +28,11 @@ public class TankGame extends PApplet {
     PImage bg, tank;
     float tx=500f, ty=375f, dx=0f, dy=-5f, r=0;
     float bx, by, mbx, mby;
-    boolean left, right, up, space;
+    boolean left, right, up, space, w, a, d;
     Tank myTank;
     ArrayList<Bullet> bulletsList = new ArrayList<>();
+    
+    final float WIDTH = 1000, HEIGHT = 750;
     
     public void setup() {
         size(1000, 750, JAVA2D);
@@ -55,6 +57,12 @@ public class TankGame extends PApplet {
             bullet.move();
             bullet.drawThis(this);
         }
+        for (int i = 0; i < bulletsList.size(); i++) {
+            if (bulletsList.get(i).x < 0) bulletsList.remove(bulletsList.get(i));
+            else if (bulletsList.get(i).x > 1000) bulletsList.remove(bulletsList.get(i));
+            else if (bulletsList.get(i).y < 0) bulletsList.remove(bulletsList.get(i));
+            else if (bulletsList.get(i).y > 750) bulletsList.remove(bulletsList.get(i));
+        }
     }
     
     public void keyPressed() {
@@ -62,11 +70,17 @@ public class TankGame extends PApplet {
         if (keyCode == RIGHT) right = true;
         if (keyCode == UP) up = true;
         if (key == ' ') space = true;
+        if (key == 'w') w = true;
+        if (key == 'a') a = true;
+        if (key == 'd') d = true;
     } public void keyReleased() {
         if (keyCode == LEFT) left = false;
         if (keyCode == RIGHT) right = false;
         if (keyCode == UP) up = false;
         if (key == ' ') space = false;
+        if (key == 'w') w = false;
+        if (key == 'a') a = false;
+        if (key == 'd') d = false;
     }
     
     /**

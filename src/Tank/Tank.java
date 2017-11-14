@@ -23,7 +23,7 @@ import processing.core.*;
 public class Tank {
     int shootCooldown = 0;
     float x, y, r;
-    final static int SHOOT_COOLDOWN = 10;
+    final static int SHOOT_COOLDOWN = 24;
     final static float TANK_SPEED = 3f, ROTATION_PER_FRAME = .08f;
     
     Tank(float x, float y) {
@@ -55,16 +55,22 @@ public class Tank {
      * @param g the ongoing game
      */
     public void update(TankGame g) {
-        if (g.right) this.r += ROTATION_PER_FRAME;
-        if (g.left) this.r -= ROTATION_PER_FRAME;
+        if (g.right || g.d) this.r += ROTATION_PER_FRAME;
+        if (g.left || g.a) this.r -= ROTATION_PER_FRAME;
         
-        if (r > Math.PI * 2) r = 0;
-        if (r < 0) r = (float) (Math.PI * 2);
+        r %= Math.PI * 2;
+//        if (r > Math.PI * 2) r = 0;
+//        if (r < 0) r = (float) (Math.PI * 2);
         
-        if (g.up) {
+        if (g.up || g.w) {
             this.x += TANK_SPEED * (float) Math.sin(r);
             this.y += TANK_SPEED * (float) -Math.cos(r);
         }
+        // check if out of bounds
+        if (this.x < 0) this.x = 0;
+        else if (this.x > g.WIDTH) this.x = g.WIDTH;
+        if (this.y < 0) this.y = 0;
+        else if (this.y > g.HEIGHT) this.y = g.HEIGHT;
         
         if (shootCooldown > 0) shootCooldown--;
         if (g.space && shootCooldown == 0) {
