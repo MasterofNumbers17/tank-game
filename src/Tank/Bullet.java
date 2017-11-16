@@ -22,7 +22,12 @@ import processing.core.PApplet;
 public class Bullet {
     float x, y, r;
     final static float BULLET_SIZE = 10, BULLET_SPEED = 12;
-
+    
+    /**Creates the bullet
+     * @param x the bullet's x position
+     * @param y the bullet's y position
+     * @param r the bullet's "facing" direction
+     */
     Bullet(float x, float y, float r) {
         this.x = x;
         this.y = y;
